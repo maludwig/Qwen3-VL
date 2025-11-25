@@ -498,12 +498,15 @@ def extract_vision_info(conversations: Union[List[Dict[str, Any]], List[List[Dic
     return vision_infos
 
 
+ProcessVisionInfoReturnWithVideoKWArgs = Tuple[Optional[List[Image.Image]], Optional[List[Union[torch.Tensor, List[Image.Image]]]], Optional[Dict[str, Any]]]
+ProcessVisionInfoReturnWithoutVideoKWArgs = Tuple[Optional[List[Image.Image]], Optional[List[Union[torch.Tensor, List[Image.Image]]]]]
+ProcessVisionInfoReturn = Union[ProcessVisionInfoReturnWithVideoKWArgs, ProcessVisionInfoReturnWithoutVideoKWArgs]
 def process_vision_info(
     conversations: Union[List[Dict[str, Any]], List[List[Dict[str, Any]]]],
     return_video_kwargs: bool = False,
     return_video_metadata: bool = False,
     image_patch_size: int = 14,
-) -> Tuple[Optional[List[Image.Image]], Optional[List[Union[torch.Tensor, List[Image.Image]]]], Optional[Dict[str, Any]]]:
+) -> ProcessVisionInfoReturn:
 
     vision_infos = extract_vision_info(conversations)
     ## Read images or videos
